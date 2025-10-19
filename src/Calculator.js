@@ -2,8 +2,10 @@ const BASIC_DELIMITERS_REGEX = /[,:]/;
 const CUSTOM_DELIMITER_REGEX = /^\/\/(.)\n(.*)$/;
 
 const _parseInput = (inputString) => {
-
-	 const customMatch = inputString.match(CUSTOM_DELIMITER_REGEX);
+	
+	const normalizedInput = inputString.replace(/\\n/g, '\n');
+	
+	 const customMatch = normalizedInput.match(CUSTOM_DELIMITER_REGEX);
 
 	//커스텀 구문자
     if (customMatch) {
@@ -16,7 +18,7 @@ const _parseInput = (inputString) => {
         return { delimiter: delimiterRegex, numbersString };
 	} else {
 		//기본 구문자
-        return { delimiter: BASIC_DELIMITERS_REGEX, numbersString: inputString };
+        return { delimiter: BASIC_DELIMITERS_REGEX, numbersString: normalizedInput };
     }
 }
 
