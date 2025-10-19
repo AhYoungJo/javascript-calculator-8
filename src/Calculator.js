@@ -2,7 +2,7 @@ const BASIC_DELIMITERS_REGEX = /[,:]/;
 const CUSTOM_DELIMITER_REGEX = /^\/\/(.)\n(.*)$/;
 
 const _parseInput = (inputString) => {
-	
+
 	const normalizedInput = inputString.replace(/\\n/g, '\n');
 	
 	 const customMatch = normalizedInput.match(CUSTOM_DELIMITER_REGEX);
@@ -45,8 +45,12 @@ const _sum = (numberTokens) => {
 }
 
 export const calculate = (inputString) => {
+    if (!inputString || inputString.trim() === '') {
+        return 0;
+    }
+    
     const { delimiter, numbersString } = _parseInput(inputString);
-	const numberTokens = numbersString.split(delimiter)
+	const numberTokens = numbersString.split(delimiter).filter(token => token !== '');
 
     return _sum(numberTokens);
 };
