@@ -18,3 +18,5 @@
 
 3. empty-string-case: 빈 문자열 입력 시 0 반환 처리
    - 빈 문자열("") 또는 null/undefined 입력 시 0이 리턴된다.
+
+4. merge-caculator: 앱과 계산 로직 병합 
