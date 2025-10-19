@@ -1,10 +1,19 @@
 const BASIC_DELIMITERS_REGEX = /[,:]/;
+const CUSTOM_DELIMITER_REGEX = /^\/\/(.)\n(.*)$/;
 
 const _parseInput = (inputString) => {
 
-	const isCustomDelimiter = false
+	 const customMatch = inputString.match(CUSTOM_DELIMITER_REGEX);
 
-	if(isCustomDelimiter){
+	//커스텀 구문자
+    if (customMatch) {
+        const customDelimiter = customMatch[1];
+		const numbersString = customMatch[2];
+		
+        const allDelimitersSource = customDelimiter + BASIC_DELIMITERS_REGEX.source.slice(1, -1);
+		const delimiterRegex = new RegExp(`[${allDelimitersSource}]`);
+		
+        return { delimiter: delimiterRegex, numbersString };
 	} else {
 		//기본 구문자
         return { delimiter: BASIC_DELIMITERS_REGEX, numbersString: inputString };
@@ -17,10 +26,8 @@ const _sum = (numberTokens) => {
 	
 	for (const token of numberTokens) {
 
-		//조건
 		const number = Number(token);
         
-		
 		if (isNaN(number)) {
 			throw new Error(`[ERROR] 숫자가 아닌 문자(${token})가 포함되어 있습니다.`);
 		}
@@ -36,9 +43,8 @@ const _sum = (numberTokens) => {
 }
 
 export const calculate = (inputString) => {
-
     const { delimiter, numbersString } = _parseInput(inputString);
-    const numberTokens = numbersString.split(delimiter);
+	const numberTokens = numbersString.split(delimiter)
 
     return _sum(numberTokens);
 };
